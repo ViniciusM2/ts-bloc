@@ -1,5 +1,5 @@
 {
-  "name": "angular-bloc-js-example",
+  "name": "ng-bloc",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
