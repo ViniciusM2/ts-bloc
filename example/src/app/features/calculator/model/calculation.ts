@@ -44,3 +44,5 @@ function _fromStringMakeOperation(operation: String): Operation {
             return Operation.None;
     }
 }
+
+export { Operation, Calculation };

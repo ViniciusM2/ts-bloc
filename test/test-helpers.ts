@@ -1,6 +1,6 @@
 import { Bloc, BlocObserver, NextFunction, Transition } from '../lib/bloc'
 import { Observable } from 'rxjs'
-import { distinct, switchMap } from 'rxjs/operators'
+import { distinct, switchMap } from 'rxjs'
 
 export class CounterBlocError extends Error {}
 

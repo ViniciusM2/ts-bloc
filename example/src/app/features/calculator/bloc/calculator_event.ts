@@ -14,3 +14,5 @@ class NextOperationSelected extends CalculatorEvent { }
 class PreviousCalculationSelected extends CalculatorEvent { }
 
 class SaveButtonPressed extends CalculatorEvent { }
+
+export { CalculatorEvent, FirstNumberUpdated, SecondNumberUpdated, NextOperationSelected, PreviousCalculationSelected, SaveButtonPressed };
