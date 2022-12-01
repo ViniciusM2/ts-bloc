@@ -1,5 +1,5 @@
 {
-  "name": "@felangel/bloc",
+  "name": "ng-bloc",
   "version": "0.3.0",
   "description": "A predictable state management library that helps implement the BLoC design pattern in JavaScript",
   "keywords": [
