@@ -1,27 +1,149 @@
-# AngularBlocJsExample
+<p align="center">
+<img src="https://raw.githubusercontent.com/felangel/bloc/master/docs/assets/bloc_logo_full.png" height="100" alt="Bloc" />
+</p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.1.
+<p align="center">
+<a href="https://codecov.io/gh/felangel/bloc.js"><img src="https://codecov.io/gh/felangel/bloc.js/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href="https://github.com/ViniciusM2/ng-bloc"><img src="https://img.shields.io/github/stars/ViniciusM2/ng-bloc.svg?style=flat&logo=github&colorB=deeppink&label=stars" alt="Star on Github"></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
+<a href="https://discord.gg/Hc5KD3g"><img src="https://img.shields.io/discord/649708778631200778.svg?logo=discord&color=blue" alt="Discord"></a>
+<a href="https://github.com/felangel/bloc"><img src="https://tinyurl.com/bloc-library" alt="Bloc Library"></a>
+</p>
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+An Angular-focused javascript library that helps implement the [BLoC pattern](https://www.didierboelens.com/2018/08/reactive-programming---streams---bloc).
 
-## Code scaffolding
+Includes a comprehensive [example](https://github.com/ViniciusM2/ng-bloc/tree/main/example) on how to use the library on an Angular project.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Fork of [Felix Angelov's](https://github.com/felangel) [bloc.js](https://github.com/ViniciusM2/ng-bloc).
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+**Learn more at [bloclibrary.dev](https://bloclibrary.dev)!**
 
-## Running unit tests
+### Bloc
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![Bloc Architecture](https://raw.githubusercontent.com/felangel/bloc/master/docs/assets/bloc_architecture_full.png)
 
-## Running end-to-end tests
+A `Bloc` is a component which converts incoming events into outgoing states.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+![Bloc Flow](https://raw.githubusercontent.com/felangel/bloc/master/docs/assets/bloc_flow.png)
 
-## Further help
+State changes in bloc begin when events are added which triggers `onEvent`. The events are then funnelled through `transformEvents`. By default, `transformEvents` uses `asyncExpand` to ensure each event is processed in the order it was added but it can be overridden to manipulate the incoming event stream. `mapEventToState` is then invoked with the transformed events and is responsible for yielding states in response to the incoming events. `transitions` are then funnelled through `transformTransitions` which can be overridden to manipulation the outgoing state changes. Lastly, `onTransition` is called just before the state is updated and contains the current state, event, and next state.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+#### Creating a Bloc
+
+```ts
+// The events which `CounterBloc` will react to.
+enum CounterEvent {
+  increment = 'INCREMENT'
+}
+
+// A `CounterBloc` which handles converting `CounterEvent`s into `int`s.
+class CounterBloc extends Bloc<CounterEvent, number> {
+  constructor() {
+    // The initial state of the `CounterBloc` is 0.
+    super(0)
+  }
+
+  async *mapEventToState(event: CounterEvent) {
+    switch (event) {
+      // When a `CounterEvent.increment` event is added,
+      // the current `state` of the bloc is accessed via the `state` property
+      // and a new state is emitted via `yield`.
+      case CounterEvent.increment:
+        yield this.state + 1
+        break
+    }
+  }
+}
+```
+
+#### Using a Bloc
+
+```ts
+// Create a `CounterBloc` instance.
+const bloc = new CounterBloc()
+
+// Access the state of the `bloc` via `state`.
+console.log(bloc.state) // 0
+
+// Interact with the `bloc` to trigger `state` changes.
+bloc.add(CounterEvent.increment)
+
+// later...
+
+// Access the new `state`.
+console.log(bloc.state) // 1
+
+// Close the `bloc` when it is no longer needed.
+bloc.close()
+```
+
+#### Observing a Bloc
+
+```ts
+enum CounterEvent {
+  increment = 'INCREMENT'
+}
+
+class CounterBloc extends Bloc<CounterEvent, number> {
+  constructor() {
+    super(0)
+  }
+
+  async *mapEventToState(event: CounterEvent) {
+    switch (event) {
+      case CounterEvent.increment:
+        yield this.state + 1
+        break
+    }
+  }
+
+  // Called whenever an `event` is added.
+  onEvent(event: CounterEvent): void {
+    console.log(event)
+  }
+
+  // Called whenever a state change is about to occur.
+  onTransition(transition: Transition<any, any>): void {
+    console.log(transition)
+  }
+
+  // Called whenever an `error` is thrown within `mapEventToState`.
+  onError(error: any): void {
+    console.log(error)
+  }
+}
+```
+
+`BlocObserver` can be used to observe all `blocs` as well.
+
+```ts
+class MyBlocObserver extends BlocObserver {
+  onEvent(bloc: Bloc<any, any>, event: CounterEvent): void {
+    console.log(event)
+  }
+
+  onTransition(bloc: Bloc<any, any>, transition: Transition<any, any>): void {
+    console.log(transition)
+  }
+
+  onError(bloc: Bloc<any, any>, error: any): void {
+    console.log(error)
+  }
+}
+```
+
+```ts
+Bloc.observer = new MyBlocObserver()
+// Use blocs...
+```
+
+## Examples
+
+- [Counter](https://github.com/felangel/bloc.js/tree/master/packages/bloc/example) - an example of how to create a `CounterBloc` in a pure typescript app.
+
+### Maintainers
+
+- [Felix Angelov](https://github.com/felangel)
