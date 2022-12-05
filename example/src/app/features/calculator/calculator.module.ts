@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CalculatorComponent } from './calculator/calculator.component';
+import { CalculatorComponent } from './view/calculator.component';
 
 
 

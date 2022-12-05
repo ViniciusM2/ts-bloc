@@ -1,14 +1,36 @@
 import { Freezed } from 'src/util/freezed';
 import { Operation } from '../model/calculation';
+
 /** Represents the relevant data necessary in order to render the calculator UI in a specific moment in time */
 abstract class CalculatorState {
     constructor(
         public readonly operation: Operation,
-        public readonly firstNumber: Number,
-        public readonly secondNumber: Number,
-        public readonly result: Number,
+        public readonly firstNumber: number,
+        public readonly secondNumber: number,
+        public readonly result: number,
     ) {
 
+    }
+
+    copyWith(
+        {
+            operation,
+            firstNumber,
+            secondNumber,
+            result
+        }: {
+            operation?: Operation;
+            firstNumber?: number;
+            secondNumber?: number;
+            result?: number;
+        } = {},
+    ) {
+        return new SuccessCalculatorState(
+            operation || this.operation,
+            firstNumber || this.firstNumber,
+            secondNumber || this.secondNumber,
+            result || this.result,
+        );
     }
 }
 
@@ -18,6 +40,8 @@ class InitialCalculatorState extends CalculatorState {
     constructor() {
         super(Operation.None, 0, 0, 0);
     }
+
+
 }
 
 /** Represents the relevant data necessary in order to render the calculator UI after successful processing of a calculation */
@@ -25,12 +49,14 @@ class InitialCalculatorState extends CalculatorState {
 class SuccessCalculatorState extends CalculatorState {
     constructor(
         operation: Operation,
-        firstNumber: Number,
-        secondNumber: Number,
-        result: Number,
+        firstNumber: number,
+        secondNumber: number,
+        result: number,
     ) {
         super(operation, firstNumber, secondNumber, result);
     }
+
+
 }
 
 /** Represents the relevant data necessary in order to render the calculator UI after unsuccessful processing of a calculation */
@@ -38,9 +64,9 @@ class SuccessCalculatorState extends CalculatorState {
 class ErrorCalculatorState extends CalculatorState {
     constructor(
         operation: Operation,
-        firstNumber: Number,
-        secondNumber: Number,
-        result: Number,
+        firstNumber: number,
+        secondNumber: number,
+        result: number,
         readonly error: Error,
     ) {
         super(operation, firstNumber, secondNumber, result);
