@@ -144,6 +144,9 @@ Bloc.observer = new MyBlocObserver()
 
 - [Counter](https://github.com/felangel/bloc.js/tree/master/packages/bloc/example) - an example of how to create a `CounterBloc` in a pure typescript app.
 
-### Maintainers
+### Maintainers (of this fork)
+- [Vinicius Menezes](https://github.com/ViniciusM2)
+### Original Author
 
 - [Felix Angelov](https://github.com/felangel)
+
