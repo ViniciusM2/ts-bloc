@@ -20,9 +20,9 @@ class SecondNumberUpdated extends CalculatorEvent {
 class NextOperationSelected extends CalculatorEvent { }
 
 @Freezed
-class PreviousCalculationSelected extends CalculatorEvent { }
+class PreviousOperationSelected extends CalculatorEvent { }
 
 @Freezed
 class SaveButtonPressed extends CalculatorEvent { }
 
-export { CalculatorEvent, FirstNumberUpdated, SecondNumberUpdated, NextOperationSelected, PreviousCalculationSelected, SaveButtonPressed };
+export { CalculatorEvent, FirstNumberUpdated, SecondNumberUpdated, NextOperationSelected, PreviousOperationSelected, SaveButtonPressed };

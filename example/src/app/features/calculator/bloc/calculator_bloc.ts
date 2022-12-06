@@ -1,6 +1,6 @@
 import { Bloc } from 'ng-bloc';
 import { CalculatorState, InitialCalculatorState } from './calculator_state';
-import { CalculatorEvent, FirstNumberUpdated, NextOperationSelected, PreviousCalculationSelected, SaveButtonPressed, SecondNumberUpdated } from './calculator_event';
+import { CalculatorEvent, FirstNumberUpdated, NextOperationSelected, PreviousOperationSelected, SaveButtonPressed, SecondNumberUpdated } from './calculator_event';
 import { Operation } from '../model/calculation';
 import { Injectable } from '@angular/core';
 import { CalculatorRepository } from '../repository/calculatorRepository';
@@ -17,109 +17,86 @@ export class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
         );
     }
     async *mapEventToState(event: CalculatorEvent): AsyncIterableIterator<CalculatorState> {
-        switch (event) {
-            case event instanceof FirstNumberUpdated:
-                this.onFirstNumberUpdated(event as FirstNumberUpdated);
+        switch (event.constructor.prototype) {
+            case FirstNumberUpdated.prototype:
+                yield this.onFirstNumberUpdated(event as FirstNumberUpdated);
                 break;
-            case event instanceof SecondNumberUpdated:
-                this.onSecondNumberUpdated(event as SecondNumberUpdated);
+            case SecondNumberUpdated.prototype:
+                yield this.onSecondNumberUpdated(event as SecondNumberUpdated);
                 break;
-            case event instanceof NextOperationSelected:
-                this.onNextOperationSelected(event as NextOperationSelected);
+            case NextOperationSelected.prototype:
+                yield this.onNextOperationSelected(event as NextOperationSelected);
                 break;
-            case event instanceof PreviousCalculationSelected:
-                this.onPreviousCalculationSelected(event as PreviousCalculationSelected);
+            case PreviousOperationSelected.prototype:
+                yield this.onPreviousOperationSelected(event as PreviousOperationSelected);
                 break;
-            case event instanceof SaveButtonPressed:
+            case SaveButtonPressed.prototype:
                 this.onSaveButtonPressed(event as SaveButtonPressed);
                 break;
             default:
+                console.log('Unknown event');
                 break;
         }
     }
 
-    private *onFirstNumberUpdated(event: FirstNumberUpdated) {
-        if (event.firstNumber != this.state.firstNumber) {
-            yield this.state.copyWith({ firstNumber: event.firstNumber });
-        }
+    private onFirstNumberUpdated(event: FirstNumberUpdated) {
         switch (this.state.operation) {
             case Operation.Add:
-                yield this.state.copyWith({ result: event.firstNumber + this.state.secondNumber });
-                break;
+                return this.state.copyWith({ result: event.firstNumber + this.state.secondNumber });
             case Operation.Subtract:
-                yield this.state.copyWith({ result: event.firstNumber - this.state.secondNumber });
-                break;
+                return this.state.copyWith({ result: event.firstNumber - this.state.secondNumber });
             case Operation.Multiply:
-                yield this.state.copyWith({ result: event.firstNumber * this.state.secondNumber });
-                break;
+                return this.state.copyWith({ result: event.firstNumber * this.state.secondNumber });
             case Operation.Divide:
-                yield this.state.copyWith({ result: event.firstNumber / this.state.secondNumber });
-                break;
+                return this.state.copyWith({ result: event.firstNumber / this.state.secondNumber });
             case Operation.None:
-                yield this.state.copyWith({ result: event.firstNumber });
-                break;
+                return this.state.copyWith({ result: event.firstNumber });
         }
     }
 
-    private *onSecondNumberUpdated(event: SecondNumberUpdated) {
-        if (event.secondNumber != this.state.secondNumber) {
-            yield this.state.copyWith({ secondNumber: event.secondNumber });
-        }
+    private onSecondNumberUpdated(event: SecondNumberUpdated) {
         switch (this.state.operation) {
             case Operation.Add:
-                yield this.state.copyWith({ result: event.secondNumber + this.state.firstNumber });
-                break;
+                return this.state.copyWith({ result: event.secondNumber + this.state.firstNumber });
             case Operation.Subtract:
-                yield this.state.copyWith({ result: event.secondNumber - this.state.firstNumber });
-                break;
+                return this.state.copyWith({ result: event.secondNumber - this.state.firstNumber });
             case Operation.Multiply:
-                yield this.state.copyWith({ result: event.secondNumber * this.state.firstNumber });
-                break;
+                return this.state.copyWith({ result: event.secondNumber * this.state.firstNumber });
             case Operation.Divide:
-                yield this.state.copyWith({ result: event.secondNumber / this.state.firstNumber });
-                break;
+                return this.state.copyWith({ result: event.secondNumber / this.state.firstNumber });
             case Operation.None:
-                yield this.state.copyWith({ result: event.secondNumber });
-                break;
+                return this.state.copyWith({ result: event.secondNumber });
         }
     }
 
-    private *onNextOperationSelected(event: NextOperationSelected) {
+    private onNextOperationSelected(event: NextOperationSelected) {
+        console.log(this.state.operation)
         switch (this.state.operation) {
             case Operation.Add:
-                yield this.state.copyWith({ operation: Operation.Subtract });
-                break;
+                return this.state.copyWith({ operation: Operation.Subtract });
             case Operation.Subtract:
-                yield this.state.copyWith({ operation: Operation.Multiply });
-                break;
+                return this.state.copyWith({ operation: Operation.Multiply });
             case Operation.Multiply:
-                yield this.state.copyWith({ operation: Operation.Divide });
-                break;
+                return this.state.copyWith({ operation: Operation.Divide });
             case Operation.Divide:
-                yield this.state.copyWith({ operation: Operation.None });
-                break;
+                return this.state.copyWith({ operation: Operation.None });
             case Operation.None:
-                yield this.state.copyWith({ operation: Operation.Add });
-                break;
+                return this.state.copyWith({ operation: Operation.Add });
         }
     }
 
-    private *onPreviousCalculationSelected(event: PreviousCalculationSelected) {
+    private onPreviousOperationSelected(event: PreviousOperationSelected) {
         switch (this.state.operation) {
             case Operation.Add:
-                yield this.state.copyWith({ operation: Operation.None });
-                break;
+                return this.state.copyWith({ operation: Operation.None });
             case Operation.Subtract:
-                yield this.state.copyWith({ operation: Operation.Add });
-                break;
+                return this.state.copyWith({ operation: Operation.Add });
             case Operation.Multiply:
-                yield this.state.copyWith({ operation: Operation.Subtract });
-                break;
+                return this.state.copyWith({ operation: Operation.Subtract });
             case Operation.Divide:
-                yield this.state.copyWith({ operation: Operation.Multiply });
-                break;
+                return this.state.copyWith({ operation: Operation.Multiply });
             case Operation.None:
-                yield this.state.copyWith({ operation: Operation.Divide });
+                return this.state.copyWith({ operation: Operation.Divide });
         }
     }
 

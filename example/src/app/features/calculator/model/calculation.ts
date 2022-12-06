@@ -1,10 +1,10 @@
 /** The action taken in a Calculation */
 enum Operation {
-    None,
-    Add,
-    Subtract,
-    Multiply,
-    Divide
+    None = "none",
+    Add = "add",
+    Subtract = "subtract",
+    Multiply = "multiply",
+    Divide = "divide"
 }
 
 /** An arithmetic calculation of tho numbers */
