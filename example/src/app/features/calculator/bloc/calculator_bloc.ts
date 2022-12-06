@@ -1,4 +1,4 @@
-import { Bloc } from 'ng-bloc/lib/bloc';
+import { Bloc } from 'ng-bloc';
 import { CalculatorState, InitialCalculatorState } from './calculator_state';
 import { CalculatorEvent, FirstNumberUpdated, NextOperationSelected, PreviousCalculationSelected, SaveButtonPressed, SecondNumberUpdated } from './calculator_event';
 import { Operation } from '../model/calculation';
@@ -9,13 +9,13 @@ import { CalculatorRepository } from '../repository/calculatorRepository';
     providedIn: 'root'
 })
 export class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
-    // constructor(
-    //     private repository: CalculatorRepository
-    // ) {
-    //     super(
-    //         new InitialCalculatorState()
-    //     );
-    // }
+    constructor(
+        private repository: CalculatorRepository
+    ) {
+        super(
+            new InitialCalculatorState()
+        );
+    }
     async *mapEventToState(event: CalculatorEvent): AsyncIterableIterator<CalculatorState> {
         switch (event) {
             case event instanceof FirstNumberUpdated:

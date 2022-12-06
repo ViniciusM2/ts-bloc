@@ -3,27 +3,34 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "sourceMap": true,
-    "declaration": false,
     "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "moduleResolution": "node",
     "importHelpers": true,
-    "target": "ES2022",
-    "module": "ES2022",
     "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
+    "moduleResolution": "node",
+    "target": "ES2022",
+    "module":"ES2022",
+    "lib": ["ES2022", "dom"],
+    "strict": true,
+    "sourceMap": true,
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declarationDir": "dist/types",
+    "outDir": "dist/lib",
+    "typeRoots": [
+      "node_modules/@types"
     ]
   },
+  "include": [
+    "lib"
+  ],
+  "exclude": ["example", "node_modules", "dist", "src/**/*.spec.ts", "src/**/*.e2e-spec.ts"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

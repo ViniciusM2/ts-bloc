@@ -1,4 +1,4 @@
-import { Freezed } from "ng-bloc/lib/bloc";
+import { Freezed } from "ng-bloc";
 
 abstract class CalculatorEvent { }
 

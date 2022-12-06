@@ -1,4 +1,4 @@
-import { Freezed } from 'src/util/freezed';
+import { Freezed } from 'ng-bloc';
 import { Operation } from '../model/calculation';
 
 /** Represents the relevant data necessary in order to render the calculator UI in a specific moment in time */
