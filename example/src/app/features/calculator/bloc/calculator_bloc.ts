@@ -1,5 +1,5 @@
 import { Bloc } from 'ts-bloc';
-import { CalculatorState, InitialCalculatorState } from './calculator_state';
+import { CalculatorState, InitialCalculatorState, SuccessCalculatorState } from './calculator_state';
 import { CalculatorEvent, FirstNumberUpdated, NextOperationSelected, PreviousOperationSelected, SaveButtonPressed, SecondNumberUpdated } from './calculator_event';
 import { Operation } from '../model/calculation';
 import { Injectable } from '@angular/core';
@@ -40,63 +40,63 @@ export class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
     }
 
     private onFirstNumberUpdated(event: FirstNumberUpdated) {
-        switch (this.state.operation) {
+        switch (this.state.calculation.operation) {
             case Operation.Add:
-                return this.state.copyWith({ result: event.firstNumber + this.state.secondNumber });
+                return new SuccessCalculatorState(this.state.calculation.copyWith({ result: event.firstNumber + this.state.calculation.secondNumber, firstNumber: event.firstNumber }));
             case Operation.Subtract:
-                return this.state.copyWith({ result: event.firstNumber - this.state.secondNumber });
+                return new SuccessCalculatorState(this.state.calculation.copyWith({ result: event.firstNumber - this.state.calculation.secondNumber, firstNumber: event.firstNumber }));
             case Operation.Multiply:
-                return this.state.copyWith({ result: event.firstNumber * this.state.secondNumber });
+                return new SuccessCalculatorState(this.state.calculation.copyWith({ result: event.firstNumber * this.state.calculation.secondNumber, firstNumber: event.firstNumber }));
             case Operation.Divide:
-                return this.state.copyWith({ result: event.firstNumber / this.state.secondNumber });
+                return new SuccessCalculatorState(this.state.calculation.copyWith({ result: event.firstNumber / this.state.calculation.secondNumber, firstNumber: event.firstNumber }));
             case Operation.None:
-                return this.state.copyWith({ result: event.firstNumber });
+                return new SuccessCalculatorState(this.state.calculation.copyWith({ result: 0, firstNumber: event.firstNumber }));
         }
     }
 
-    private onSecondNumberUpdated(event: SecondNumberUpdated) {
-        switch (this.state.operation) {
+    private onSecondNumberUpdated(event: SecondNumberUpdated): CalculatorState {
+
+        switch (this.state.calculation.operation) {
             case Operation.Add:
-                return this.state.copyWith({ result: event.secondNumber + this.state.firstNumber });
+                return new SuccessCalculatorState(this.state.calculation.copyWith({ result: this.state.calculation.firstNumber + event.secondNumber, secondNumber: event.secondNumber }));
             case Operation.Subtract:
-                return this.state.copyWith({ result: event.secondNumber - this.state.firstNumber });
+                return new SuccessCalculatorState(this.state.calculation.copyWith({ result: this.state.calculation.firstNumber - event.secondNumber, secondNumber: event.secondNumber }));
             case Operation.Multiply:
-                return this.state.copyWith({ result: event.secondNumber * this.state.firstNumber });
+                return new SuccessCalculatorState(this.state.calculation.copyWith({ result: this.state.calculation.firstNumber * event.secondNumber, secondNumber: event.secondNumber }));
             case Operation.Divide:
-                return this.state.copyWith({ result: event.secondNumber / this.state.firstNumber });
+                return new SuccessCalculatorState(this.state.calculation.copyWith({ result: this.state.calculation.firstNumber / event.secondNumber, secondNumber: event.secondNumber }));
             case Operation.None:
-                return this.state.copyWith({ result: event.secondNumber });
+                return new SuccessCalculatorState(this.state.calculation.copyWith({ result: 0, secondNumber: event.secondNumber }));
         }
     }
 
-    private onNextOperationSelected(event: NextOperationSelected) {
-        console.log(this.state.operation)
-        switch (this.state.operation) {
+    private onNextOperationSelected(event: NextOperationSelected): CalculatorState {
+        switch (this.state.calculation.operation) {
             case Operation.Add:
-                return this.state.copyWith({ operation: Operation.Subtract });
+                return this.state.copyWith(this.state.calculation.copyWith({ operation: Operation.Subtract })) as SuccessCalculatorState;
             case Operation.Subtract:
-                return this.state.copyWith({ operation: Operation.Multiply });
+                return this.state.copyWith(this.state.calculation.copyWith({ operation: Operation.Multiply })) as SuccessCalculatorState;
             case Operation.Multiply:
-                return this.state.copyWith({ operation: Operation.Divide });
+                return this.state.copyWith(this.state.calculation.copyWith({ operation: Operation.Divide })) as SuccessCalculatorState;
             case Operation.Divide:
-                return this.state.copyWith({ operation: Operation.None });
+                return this.state.copyWith(this.state.calculation.copyWith({ operation: Operation.None })) as SuccessCalculatorState;
             case Operation.None:
-                return this.state.copyWith({ operation: Operation.Add });
+                return this.state.copyWith(this.state.calculation.copyWith({ operation: Operation.Add })) as SuccessCalculatorState;
         }
     }
 
     private onPreviousOperationSelected(event: PreviousOperationSelected) {
-        switch (this.state.operation) {
+        switch (this.state.calculation.operation) {
             case Operation.Add:
-                return this.state.copyWith({ operation: Operation.None });
+                return this.state.copyWith(this.state.calculation.copyWith({ operation: Operation.None })) as SuccessCalculatorState;
             case Operation.Subtract:
-                return this.state.copyWith({ operation: Operation.Add });
+                return this.state.copyWith(this.state.calculation.copyWith({ operation: Operation.Add })) as SuccessCalculatorState;
             case Operation.Multiply:
-                return this.state.copyWith({ operation: Operation.Subtract });
+                return this.state.copyWith(this.state.calculation.copyWith({ operation: Operation.Subtract })) as SuccessCalculatorState;
             case Operation.Divide:
-                return this.state.copyWith({ operation: Operation.Multiply });
+                return this.state.copyWith(this.state.calculation.copyWith({ operation: Operation.Multiply })) as SuccessCalculatorState;
             case Operation.None:
-                return this.state.copyWith({ operation: Operation.Divide });
+                return this.state.copyWith(this.state.calculation.copyWith({ operation: Operation.Divide })) as SuccessCalculatorState;
         }
     }
 

@@ -14,10 +14,10 @@ enum Operation {
 @Freezed
 class Calculation {
     constructor(
-        public readonly firstNumber: Number,
-        public readonly secondNumber: Number,
+        public readonly firstNumber: number,
+        public readonly secondNumber: number,
         public readonly operation: Operation,
-        public readonly result: Number
+        public readonly result: number
     ) {
         Object.freeze(this);
     }
@@ -29,6 +29,27 @@ class Calculation {
             Number(json.get("secondNumber")),
             _fromStringMakeOperation(json.get("operation")),
             Number(json.get("result"))
+        );
+    }
+
+    copyWith(
+        {
+            operation,
+            firstNumber,
+            secondNumber,
+            result
+        }: {
+            operation?: Operation;
+            firstNumber?: number;
+            secondNumber?: number;
+            result?: number;
+        } = {},
+    ) {
+        return new Calculation(
+            firstNumber || this.firstNumber,
+            secondNumber || this.secondNumber,
+            operation || this.operation,
+            result || this.result,
         );
     }
 

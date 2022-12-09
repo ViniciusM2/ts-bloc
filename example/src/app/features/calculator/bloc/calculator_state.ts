@@ -1,44 +1,25 @@
 import { Freezed } from 'ts-bloc';
-import { Operation } from '../model/calculation';
+import { Calculation, Operation } from '../model/calculation';
 
 /** Represents the relevant data necessary in order to render the calculator UI in a specific moment in time */
-abstract class CalculatorState {
+class CalculatorState {
     constructor(
-        public readonly operation: Operation,
-        public readonly firstNumber: number,
-        public readonly secondNumber: number,
-        public readonly result: number,
+        public readonly calculation: Calculation,
     ) {
 
     }
 
-    copyWith(
-        {
-            operation,
-            firstNumber,
-            secondNumber,
-            result
-        }: {
-            operation?: Operation;
-            firstNumber?: number;
-            secondNumber?: number;
-            result?: number;
-        } = {},
-    ) {
-        return new SuccessCalculatorState(
-            operation || this.operation,
-            firstNumber || this.firstNumber,
-            secondNumber || this.secondNumber,
-            result || this.result,
-        );
+    copyWith(calculation: Calculation): CalculatorState {
+        return new CalculatorState(calculation);
     }
+
 }
 
 /** Represents the initially relevant data necessary in order to render the calculator UI */
 @Freezed
 class InitialCalculatorState extends CalculatorState {
     constructor() {
-        super(Operation.None, 0, 0, 0);
+        super(new Calculation(0, 0, Operation.None, 0));
     }
 }
 
@@ -46,13 +27,11 @@ class InitialCalculatorState extends CalculatorState {
 @Freezed
 class SuccessCalculatorState extends CalculatorState {
     constructor(
-        operation: Operation,
-        firstNumber: number,
-        secondNumber: number,
-        result: number,
+        calculation: Calculation,
     ) {
-        super(operation, firstNumber, secondNumber, result);
+        super(calculation);
     }
+
 
 
 }
@@ -60,15 +39,7 @@ class SuccessCalculatorState extends CalculatorState {
 /** Represents the relevant data necessary in order to render the calculator UI after unsuccessful processing of a calculation */
 @Freezed
 class ErrorCalculatorState extends CalculatorState {
-    constructor(
-        operation: Operation,
-        firstNumber: number,
-        secondNumber: number,
-        result: number,
-        readonly error: Error,
-    ) {
-        super(operation, firstNumber, secondNumber, result);
-    }
+
 }
 
 export { CalculatorState, InitialCalculatorState, SuccessCalculatorState, ErrorCalculatorState };

@@ -10,24 +10,24 @@ import { Operation } from '../model/calculation';
 })
 export class CalculatorComponent {
   constructor(private calculatorBloc: CalculatorBloc) {
-    this.currentOperation = calculatorBloc.state.operation;
-    this.title = this.getTitleStringFromOperation(calculatorBloc.state.operation);
+    this.currentOperation = calculatorBloc.state.calculation.operation;
+    this.title = this.getTitleStringFromOperation(calculatorBloc.state.calculation.operation);
     calculatorBloc.listen((state) => {
       console.log(state);
-      this.currentOperation = state.operation;
-      this.title = this.getTitleStringFromOperation(state.operation);
+      this.currentOperation = state.calculation.operation;
+      this.title = this.getTitleStringFromOperation(state.calculation.operation);
     });
   }
 
   currentOperation: Operation = Operation.None;
   title = 'None';
 
-  public onNext(){
+  public onNext() {
     // console.log('next');
     this.calculatorBloc.add(new NextOperationSelected());
   }
 
-  public onPrevious(){
+  public onPrevious() {
     // console.log('previous');
     this.calculatorBloc.add(new PreviousOperationSelected());
   }
