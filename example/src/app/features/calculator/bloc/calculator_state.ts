@@ -1,4 +1,4 @@
-import { Freezed } from 'ng-bloc';
+import { Freezed } from 'ts-bloc';
 import { Operation } from '../model/calculation';
 
 /** Represents the relevant data necessary in order to render the calculator UI in a specific moment in time */
@@ -40,8 +40,6 @@ class InitialCalculatorState extends CalculatorState {
     constructor() {
         super(Operation.None, 0, 0, 0);
     }
-
-
 }
 
 /** Represents the relevant data necessary in order to render the calculator UI after successful processing of a calculation */

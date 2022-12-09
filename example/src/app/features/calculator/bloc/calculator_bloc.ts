@@ -1,4 +1,4 @@
-import { Bloc } from 'ng-bloc';
+import { Bloc } from 'ts-bloc';
 import { CalculatorState, InitialCalculatorState } from './calculator_state';
 import { CalculatorEvent, FirstNumberUpdated, NextOperationSelected, PreviousOperationSelected, SaveButtonPressed, SecondNumberUpdated } from './calculator_event';
 import { Operation } from '../model/calculation';

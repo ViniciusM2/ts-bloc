@@ -4,7 +4,7 @@
 
 <p align="center">
 <a href="https://codecov.io/gh/felangel/bloc.js"><img src="https://codecov.io/gh/felangel/bloc.js/branch/master/graph/badge.svg" alt="codecov"></a>
-<a href="https://github.com/ViniciusM2/ng-bloc"><img src="https://img.shields.io/github/stars/ViniciusM2/ng-bloc.svg?style=flat&logo=github&colorB=deeppink&label=stars" alt="Star on Github"></a>
+<a href="https://github.com/ViniciusM2/ts-bloc"><img src="https://img.shields.io/github/stars/ViniciusM2/ts-bloc.svg?style=flat&logo=github&colorB=deeppink&label=stars" alt="Star on Github"></a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
 <a href="https://discord.gg/Hc5KD3g"><img src="https://img.shields.io/discord/649708778631200778.svg?logo=discord&color=blue" alt="Discord"></a>
 <a href="https://github.com/felangel/bloc"><img src="https://tinyurl.com/bloc-library" alt="Bloc Library"></a>
@@ -14,9 +14,9 @@
 
 An Angular-focused javascript library that helps implement the [BLoC pattern](https://www.didierboelens.com/2018/08/reactive-programming---streams---bloc).
 
-Includes a comprehensive [example](https://github.com/ViniciusM2/ng-bloc/tree/main/example) on how to use the library on an Angular project.
+Includes a comprehensive [example](https://github.com/ViniciusM2/ts-bloc/tree/main/example) on how to use the library on an Angular project.
 
-Fork of [Felix Angelov's](https://github.com/felangel) [bloc.js](https://github.com/ViniciusM2/ng-bloc).
+Fork of [Felix Angelov's](https://github.com/felangel) [bloc.js](https://github.com/ViniciusM2/ts-bloc).
 
 
 **Learn more at [bloclibrary.dev](https://bloclibrary.dev)!**

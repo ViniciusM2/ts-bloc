@@ -19,7 +19,7 @@
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
     "@esfx/equatable": "^1.0.2",
-    "ng-bloc": "file:..",
+    "ts-bloc": "file:..",
     "rxjs": "~7.5.0",
     "zone.js": "~0.12.0"
   },

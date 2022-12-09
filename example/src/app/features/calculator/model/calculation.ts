@@ -1,3 +1,5 @@
+import { Freezed } from "ts-bloc";
+
 /** The action taken in a Calculation */
 enum Operation {
     None = "none",
@@ -8,6 +10,8 @@ enum Operation {
 }
 
 /** An arithmetic calculation of tho numbers */
+
+@Freezed
 class Calculation {
     constructor(
         public readonly firstNumber: Number,

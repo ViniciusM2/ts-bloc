@@ -1,5 +1,5 @@
 {
-  "name": "ng-bloc",
+  "name": "ts-bloc",
   "version": "0.0.0",
   "main": "dist/lib/bloc.js",
   "module": "dist/lib/bloc.js",
