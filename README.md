@@ -16,7 +16,7 @@ An Angular-focused javascript library that helps implement the [BLoC pattern](ht
 
 Includes a comprehensive [example](https://github.com/ViniciusM2/ts-bloc/tree/main/example) on how to use the library on an Angular project.
 
-Fork of [Felix Angelov's](https://github.com/felangel) [bloc.js](https://github.com/ViniciusM2/ts-bloc).
+Fork of [Felix Angelov's](https://github.com/felangel) [bloc.js](https://github.com/felangel/bloc.js).
 
 
 **Learn more at [bloclibrary.dev](https://bloclibrary.dev)!**
